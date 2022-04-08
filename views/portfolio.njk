@@ -10,20 +10,18 @@
 {% block content %}
 
     <div id="wrapper">
-
+        <h1>Portfolio</h1>
     </div>
     
     <section class="cards">
-
         <!--Estrutura de repetição/ FOR-->
         {% for item in itens %}
-
         <div class="card" id="{{item.id}}">
-            <div class="card-image-container">
+            <div class="card-image-container {{'featured-wrapper' if item.featured}}">
                 <img src="https://img.youtube.com/vi/{{item.id}}/maxresdefault.jpg" alt="Image of {{item.title}}">
                 {% if item.featured %}
-                    <div class="featured"></div>
-            
+                <div class="featured">Featured</div>
+                {% endif %}
             </div>
             <div class="card-content">
                 <p>{{item.title}}</p>
@@ -33,8 +31,7 @@
                 <p class="card-price">{{item.price}}</p>
             </div>
         </div>
-
-        <!--Fechar o for-->
+        <!--close the for-->
         {% endfor %}
 
     </section>

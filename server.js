@@ -9,7 +9,10 @@ server.use(express.static('public'))
 server.set("view engine", "njk")
 
 nunjucks.configure("views", {
-    express: server
+    express: server,
+    autoescape: false,
+    //não salvar o cache - não vir a copia
+    noCache: true
 })
 
 
@@ -41,6 +44,24 @@ server.get("/portfolio", function(req, res){
     return res.render("portfolio", {itens : videos})
 })
 
+server.get("/video", function(req, res) {
+    const id = req.query.id;
+
+    //fazer um filtro do data.js pegando cada video
+    const video = videos.find(function(video){
+        // a quick method to return a if boolean (true or false)
+        //cleancode principles
+        return video.id == id;
+        /* if(video.id == id) {
+            return true
+        } */
+    })
+
+    if (!video){
+        return res.send("video not found")
+    }
+    return res.render("video", { item: video});
+})
 
 server.listen(5000, function(){
     console.log("Server is running")
